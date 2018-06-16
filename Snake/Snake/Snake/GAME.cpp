@@ -62,6 +62,7 @@ void gameUpdate(GAME * g)
 			if (g->life == 0)
 			{
 				gameOverDraw();
+				SDL_DestroyRenderer(g_renderer);
 				/*g->running = SDL_FALSE;*/
 			}
 }
