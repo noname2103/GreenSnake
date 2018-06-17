@@ -52,8 +52,8 @@ void gameUpdate(GAME * g)
 
 	if (g->s.coords[0].x >= BOARD_HORZ) g->s.coords[0].x = 0;
 	if (g->s.coords[0].x < 0) g->s.coords[0].x = BOARD_HORZ;
-	if (g->s.coords[0].y >= BOARD_VERT) g->s.coords[0].y = 0;
-	if (g->s.coords[0].y < 0) g->s.coords[0].y = BOARD_VERT;
+	if (g->s.coords[0].y >= BOARD_VERT) g->s.coords[0].y = 2;
+	if (g->s.coords[0].y <= 1) g->s.coords[0].y = BOARD_VERT;
 
 	for (int i = 1; i < g->s.len; i++)
 		if (g->s.coords[0].x == g->s.coords[i].x &&
@@ -65,7 +65,7 @@ void gameUpdate(GAME * g)
 				SDL_SetRenderDrawColor(g_renderer, 0, 0, 0, 0);
 				SDL_RenderClear(g_renderer);
 				gameOverDraw();
-				SDL_RenderPresent(g_renderer);
+				/*SDL_RenderPresent(g_renderer);*/
 				
 				/*g->running = SDL_FALSE;*/
 			}
@@ -75,6 +75,22 @@ void gameDraw(GAME * g)
 {
 	SDL_SetRenderDrawColor(g_renderer, 0, 0, 0, 0);
 	SDL_RenderClear(g_renderer);
+	for (int i = 0; i < BOARD_VERT; i++)
+	{
+		for (int j = 0; j < BOARD_HORZ; j++)
+		{
+			rectDraw(j*BOARD_CELL, i*BOARD_CELL,
+				BOARD_CELL, BOARD_CELL, 10);
+		}
+	}
+	for (int i = 0; i < 2; i++)
+	{
+		for (int j = 0; j < BOARD_HORZ; j++)
+		{
+			rectDraw(j*BOARD_CELL, i*BOARD_CELL,
+				BOARD_CELL, BOARD_CELL, 11);
+		}
+	}
 	for (int i = 0; i < g->life; i++)
 	{
 		lifeDraw((23-i)*BOARD_CELL, 3,2);

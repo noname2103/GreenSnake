@@ -8,7 +8,7 @@ unsigned long GAME_PALETTE[CR_MAX_COLORS] =
 {
 	0x000000,0x0000AA,0x00AA00,0x00AAAA,
 	0xAA0000,0xAA00AA,0xAA5500,0xAAAAAA,
-	0x555555,0x5555FF,0x55FF55,0x55FFFF,
+	0x555555,0x5555FF,0xcfff70,0x6f95ff,
 	0xFF5555,0xFF55FF,0xFFFF55,0xFFFFFF,
 	0x95A7C4,0x5D6B82
 };
@@ -52,7 +52,7 @@ void digitDraw(int x, int y, int digit)
 			if (value & 0x4)
 				rectDraw(x + j*5,
 					y + i*5,
-					5, 5, CR_GRAY);
+					5, 5, CR_WHITE);
 			value <<= 1;                /* dịch trái 1 bit */
 		}
 	}

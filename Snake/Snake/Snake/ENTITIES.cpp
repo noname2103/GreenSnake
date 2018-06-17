@@ -44,15 +44,32 @@ void fruitGen(FRUIT * f, const SNAKE * s)
 	while (!ok) {
 		f->loc.x = rand() % BOARD_HORZ;
 		f->loc.y = rand() % BOARD_VERT;
+		if (f->loc.y <= 1)
+		{
+			f->loc.y = rand() % BOARD_VERT;
+		}
 		for (i = 0; i < s->len; i++) {
 			if (f->loc.x != s->coords[i].x &&
 				f->loc.y != s->coords[i].y)
 				continue;
+			else
+			{
+				f->loc.x = rand() % BOARD_HORZ;
+				f->loc.y = rand() % BOARD_VERT;
+			}
+			if (f->loc.y <= 1)
+				{
+					f->loc.y = rand() % BOARD_VERT;
+				}
 		}
 		if (i == s->len)
 			ok = SDL_TRUE;
 	}
 	f->color = rand() % 14 + 1;
+	if (f->color == 10)
+	{
+		f->color = rand() % 14 + 1;
+	}
 }
 
 void fruitDraw(const FRUIT * f)
