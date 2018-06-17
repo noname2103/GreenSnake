@@ -50,9 +50,9 @@ void digitDraw(int x, int y, int digit)
 		char value = DIGITS[digit*DIGIT_HEIGHT + i];
 		for (int j = 0; j < DIGIT_WIDTH; j++) {
 			if (value & 0x4)
-				rectDraw(x + j*BOARD_CELL,
-					y + i*BOARD_CELL,
-					BOARD_CELL, BOARD_CELL, CR_GRAY);
+				rectDraw(x + j*5,
+					y + i*5,
+					5, 5, CR_GRAY);
 			value <<= 1;                /* dịch trái 1 bit */
 		}
 	}

@@ -28,6 +28,12 @@ void fruitGen(FRUIT * f, const SNAKE * s);
 
 void fruitDraw(const FRUIT * f);
 
-void lifeDraw(int x, int y);
+void lifeDraw(int x, int y, int w);
 
 void gameOverDraw();
+
+void heartDraw(int x, int y, int w);
+
+void appleDraw(int x, int y, Uint32 color);
+
+void snakeHeadDraw(int a, int b, Uint32 color);

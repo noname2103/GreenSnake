@@ -2,8 +2,9 @@
 #include <SDL2/sdl.h>
 #include <stdio.h>
 #include <time.h>
+#include <SDL2/SDL_mixer.h>
 
-#define BOARD_CELL		16
+#define BOARD_CELL		22
 #define BOARD_HORZ		48
 #define BOARD_VERT		30
 

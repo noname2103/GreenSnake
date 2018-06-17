@@ -4,13 +4,12 @@
 #include <stdlib.h>
 #include <time.h>
 
-
 void gameInit(GAME * g, SDL_bool fullscreen)
 {
 	
 	srand((unsigned int)time(0));
 	SDL_Init(SDL_INIT_VIDEO);
-	g_window = SDL_CreateWindow("Snake",
+	g_window = SDL_CreateWindow("Green Snake",
 		SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
 		BOARD_CELL * BOARD_HORZ, BOARD_CELL * BOARD_VERT,
 		SDL_WINDOW_SHOWN |
@@ -34,7 +33,7 @@ void gameShutdown(GAME * g)
 
 void gameUpdate(GAME * g)
 {
-	snakeUpdate(&g->s);        
+	snakeUpdate(&g->s);
 	switch (g->dir) {           
 	case UP:    g->s.coords[0].y--; break;  
 	case DOWN:  g->s.coords[0].y++; break;  
@@ -47,7 +46,8 @@ void gameUpdate(GAME * g)
 		g->s.len++;
 		g->score++;
 		g->s.color = g->f.color;
-		fruitGen(&g->f, &g->s); 
+		fruitGen(&g->f, &g->s);
+		SDL_MixAudio((Uint8 *)3,(Uint8 *) 3,(Uint32) 1, SDL_MIX_MAXVOLUME /2);
 	}
 
 	if (g->s.coords[0].x >= BOARD_HORZ) g->s.coords[0].x = 0;
@@ -61,8 +61,12 @@ void gameUpdate(GAME * g)
 			g->life--;
 			if (g->life == 0)
 			{
-				gameOverDraw();
 				SDL_DestroyRenderer(g_renderer);
+				SDL_SetRenderDrawColor(g_renderer, 0, 0, 0, 0);
+				SDL_RenderClear(g_renderer);
+				gameOverDraw();
+				SDL_RenderPresent(g_renderer);
+				
 				/*g->running = SDL_FALSE;*/
 			}
 }
@@ -73,19 +77,17 @@ void gameDraw(GAME * g)
 	SDL_RenderClear(g_renderer);
 	for (int i = 0; i < g->life; i++)
 	{
-		lifeDraw(42 + i*2, 1);
+		lifeDraw((23-i)*BOARD_CELL, 3,2);
 	}
+	//snakeHeadDraw(10, 10, 2);
+	//appleDraw(2, 2, 4);
+	/*heartDraw(42, 2, 2);*/
 	fruitDraw(&g->f);
 	snakeDraw(&g->s);
-	if (g->score > 9)
-	{
-		digitDraw((BOARD_HORZ >> 1) + BOARD_CELL * 6, BOARD_VERT * 2, g->score%10);
-		digitDraw((BOARD_HORZ >> 1) + BOARD_CELL * 2, BOARD_VERT * 2, g->score/10);
-	}
-	else
-	{
-		digitDraw((BOARD_HORZ >> 1) + BOARD_CELL * 2, BOARD_VERT * 2, g->score);
-	}
+	digitDraw(37 * BOARD_CELL, 7, (g->score/1000)%10);
+	digitDraw(38 * BOARD_CELL, 7, (g->score/100)%10);
+	digitDraw(39 * BOARD_CELL, 7, (g->score/10)%10);
+	digitDraw(40*BOARD_CELL, 7, g->score%10);
 	SDL_RenderPresent(g_renderer);
 }
 
@@ -98,10 +100,10 @@ void gameInput(GAME * g)
 	case SDL_KEYDOWN:
 		switch (e.key.keysym.sym)
 		{
-		case SDLK_UP:       if (g->dir != DOWN) { g->dir = UP; break; }
-		case SDLK_DOWN:     if (g->dir != UP)	{ g->dir = DOWN; break;}
-		case SDLK_LEFT:     if (g->dir != RIGHT) { g->dir = LEFT; break; }
-		case SDLK_RIGHT:    if (g->dir != LEFT) { g->dir = RIGHT; break; }
+		case SDLK_UP:       if (g->dir != DOWN)  g->dir = UP; break; 
+		case SDLK_DOWN:     if (g->dir != UP) g->dir = DOWN; break;
+		case SDLK_LEFT:     if (g->dir != RIGHT) g->dir = LEFT; break;
+		case SDLK_RIGHT:    if (g->dir != LEFT) g->dir = RIGHT; break;
 		case SDLK_ESCAPE:   g->running = SDL_FALSE; break;
 		}
 		break;
