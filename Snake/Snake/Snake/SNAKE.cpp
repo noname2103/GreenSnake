@@ -1,5 +1,5 @@
 #include "GAME.h"
-#include<SDL2/SDL_mixer.h>
+//#include<SDL2/SDL_mixer.>
 
 static SDL_Surface *g_screen = NULL;
 static SDL_Surface *g_bkground = NULL;
